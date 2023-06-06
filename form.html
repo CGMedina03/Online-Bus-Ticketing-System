@@ -12,140 +12,144 @@
   </head>
 
   <body>
-    <div class="container-fluid">
-      <section>
-        <h3>INFORMATION</h3>
-        <form action="">
-          <div class="mb-3">
-            <label for="InputEmail1" class="form-label">Email address</label>
-            <input
-              type="email"
-              class="form-control"
-              id="InputEmail1"
-              aria-describedby="emailHelp"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="InputContact" class="form-label">Contact number:</label>
-            <input
-              type="number"
-              class="form-control"
-              id="InputNUmber"
-              aria-describedby="contactNumber"
-              required
-            />
-          </div>
-          <div class="mb-3">
-            <label for="InputPersons" class="form-label"
-              >Number of person(s):
-            </label>
-            <input
-              type="number"
-              class="form-control"
-              id="InputPersons"
-              aria-describedby="numberOfPersons"
-              required
-            />
-          </div>
-        </form>
-      </section>
-
-      <!-- Appointment -->
-      <section>
-        <h3>Appointment</h3>
-
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <!-- For destination routes -->
-              <div class="dropdown">
-                <button
-                  class="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+    <section>
+      <div class="container-lg">
+        <div class="row">
+          <h3 class="text-center mb-4">Contact Information</h3>
+          <div class="col col-6 d-flex justify-content-center">
+            <!-- <h3>INFORMATION</h3> -->
+            <form>
+              <div class="mb-3">
+                <label for="InputEmail1" class="form-label"
+                  >Email address</label
                 >
-                  Dropdown button
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </li>
-                </ul>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="InputEmail1"
+                  aria-describedby="emailHelp"
+                  required
+                />
               </div>
-            </div>
-            <div class="col">
-              <!-- for time picker -->
-              <div class="dropdown">
-                <button
-                  class="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+              <div class="mb-3">
+                <label for="InputContact" class="form-label"
+                  >Contact number:</label
                 >
-                  Dropdown button
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </li>
-                </ul>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="InputNUmber"
+                  aria-describedby="contactNumber"
+                  required
+                />
               </div>
+              <div class="mb-3">
+                <label for="InputPersons" class="form-label"
+                  >Number of person(s):
+                </label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="InputPersons"
+                  aria-describedby="numberOfPersons"
+                  required
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Appointment -->
+    <section>
+      <h3 class="text-center mb-4">Appointment</h3>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <!-- For destination routes -->
+            <div class="dropdown">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown button
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
             </div>
           </div>
+          <div class="col">
+            <!-- for time picker -->
+            <div class="dropdown">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Dropdown button
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- Payment -->
-      <section>
-        <h3>Payment</h3>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
-          />
-          <label class="form-check-label" for="flexRadioDefault1">
-            Gcash
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
-            disabled
-          />
-          <label class="form-check-label" for="flexRadioDefault2">
-            Credit
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
-            disabled
-          />
-          <label class="form-check-label" for="flexRadioDefault2">
-            Debit
-          </label>
-        </div>
-      </section>
+    <!-- Payment -->
+    <section>
+      <h3 class="text-center mb-4">Payment</h3>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault1"
+        />
+        <label class="form-check-label" for="flexRadioDefault1"> Gcash </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault2"
+          disabled
+        />
+        <label class="form-check-label" for="flexRadioDefault2"> Credit </label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="flexRadioDefault"
+          id="flexRadioDefault2"
+          disabled
+        />
+        <label class="form-check-label" for="flexRadioDefault2"> Debit </label>
+      </div>
+    </section>
 
-      <!-- Submit button -->
-      <a href="TC.html">
-        <button type="button" class="btn btn-success">Proceed</button>
-      </a>
-    </div>
+    <!-- Submit button -->
+    <a href="TC.html">
+      <button type="button" class="btn btn-success">Proceed</button>
+    </a>
+
     <!-- script for bootstrap -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   </body>
