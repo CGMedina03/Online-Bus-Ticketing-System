@@ -67,9 +67,27 @@
 
       <div class="container">
         <div class="row">
+          <!-- date picker -->
+          <div class="col col-md-4">
+            <form>
+              <div class="row form-group">
+                <label for="date" class="col-sm-1 col-form-label">Date</label>
+                <div class="col-sm-4">
+                  <div class="input-group date" id="datepicker">
+                    <input type="text" class="form-control" />
+                    <span class="input-group-append">
+                      <span class="input-group-text bg-white">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
           <div class="col">
             <!-- For destination routes -->
-            <div class="dropdown">
+            <div class="dropdown col-md-4">
               <button
                 class="btn btn-secondary dropdown-toggle"
                 type="button"
@@ -87,8 +105,8 @@
               </ul>
             </div>
           </div>
-          <div class="col">
-            <!-- for time picker -->
+          <!-- for time picker -->
+          <div class="col col-md-4">
             <div class="dropdown">
               <button
                 class="btn btn-secondary dropdown-toggle"
@@ -152,5 +170,10 @@
 
     <!-- script for bootstrap -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        $("#datepicker").datepicker();
+      });
+    </script>
   </body>
 </html>
