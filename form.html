@@ -8,7 +8,7 @@
       rel="stylesheet"
       href="node_modules/bootstrap/dist/css/bootstrap.css"
     />
-    <title>Document</title>
+    <title>Book here</title>
   </head>
 
   <body>
@@ -19,6 +19,16 @@
           <!-- <h3>INFORMATION</h3> -->
           <form action="TC.html">
             <h3 class="text-center mb-4">Contact Information</h3>
+            <div class="mb-3">
+              <label for="InputName" class="form-label">Name: </label>
+              <input
+                type="text"
+                class="form-control"
+                id="InputName"
+                aria-describedby="userName"
+                required
+              />
+            </div>
             <div class="mb-3">
               <label for="InputEmail1" class="form-label">Email address</label>
               <input
@@ -138,11 +148,13 @@
 
             <div class="justify-content-around d-flex align-items-center">
               <!-- cancel button -->
-              <a href="index.html">
-                <button type="submit" class="btn btn-secondary btn-sm">
-                  Cancel
-                </button></a
+              <a
+                href="index.html"
+                type="submit"
+                class="btn btn-secondary btn-sm"
               >
+                Cancel
+              </a>
               <!-- submit button -->
               <button type="submit" class="btn btn-success btn-lg">
                 Proceed
