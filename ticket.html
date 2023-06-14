@@ -11,28 +11,102 @@
     <title>Your ticket</title>
   </head>
   <body>
-    <h3 class="mx-auto p-1 text-center">Your ticket!</h3>
+    <h3 class="mx-auto my-3 p-1 text-center">Your ticket!</h3>
     <!-- start of the ticket -->
-    <div class="card mx-auto p-3 rounded-3" style="width: 18rem">
-      <div class="card-body">
-        <h3 class="card-title m-2">Bus Corp. Ticket</h3>
-        <h5 class="card-subtitle text-body-secondary">
-          Thank you for choosing Bus Corp. See you next time!
-        </h5>
-        <h6 class="card-subtitle mt-3 text-body-secondary">Name:</h6>
-        <p class="card-text">Lorem ipsum</p>
-        <h6 class="card-subtitle mt-3 text-body-secondary">
-          Nunber of person(s):
-        </h6>
-        <p class="card-text">Lorem ipsum</p>
-        <h6 class="card-subtitle mt-3 text-body-secondary">Route and Time:</h6>
-        <p class="card-text">Lorem ipsum</p>
-        <a href="index.html" class="card-link btn btn-sm btn-success"
-          >Success</a
-        >
+    <div class="container justify-content-center d-flex mt-5">
+      <div class="card mb-3" style="max-width: 540px">
+        <div class="card-header text-capitalize text-center">Bus Corp.</div>
+        <div class="row">
+          <div class="col-md-6">
+            <!-- for qr code generator -->
+            <div
+              id="qrcode"
+              class="d-flex justify-content-center align-items-center m-md-5 mt-3"
+            ></div>
+          </div>
+          <div class="col-md-6">
+            <div class="card-body text-center">
+              <h5 class="card-title lead display-5">Thank you!</h5>
+              <p class="card-text">Name: Christian Genesis A. Medina</p>
+              <p class="card-text">Contact number: 09567352095</p>
+              <p class="card-text">Number of Person(s): 2</p>
+              <p class="card-text">Scheduled date: 3/23/2024</p>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer text-body-secondary d-flex justify-content-end">
+          <button class="btn btn-success btn-sm" onclick="downloadTicket()">
+            Download Ticket
+          </button>
+        </div>
       </div>
     </div>
 
+    <!-- script to download the ticket -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+      function downloadTicket() {
+        const button = document.querySelector(".card-footer button");
+        const footer = document.querySelector(".card-footer");
+        button.style.display = "none";
+        footer.style.display = "none";
+
+        const qrCodeDiv = document.getElementById("qrcode");
+
+        setTimeout(() => {
+          html2canvas(qrCodeDiv).then(function (qrCodeCanvas) {
+            const cardElement = document.querySelector(".card");
+            html2canvas(cardElement).then(function (cardCanvas) {
+              const finalCanvas = document.createElement("canvas");
+              const context = finalCanvas.getContext("2d");
+              finalCanvas.width = cardCanvas.width;
+              finalCanvas.height = cardCanvas.height;
+              context.drawImage(cardCanvas, 0, 0);
+              context.drawImage(
+                qrCodeCanvas,
+                qrCodeDiv.offsetLeft,
+                qrCodeDiv.offsetTop
+              );
+
+              const link = document.createElement("a");
+              link.download = "ticket.png";
+              link.href = finalCanvas
+                .toDataURL("image/png")
+                .replace("image/png", "image/octet-stream");
+              link.click();
+
+              button.style.display = "block";
+              footer.style.display = "flex";
+            });
+          });
+        }, 1000);
+      }
+
+      // Generate the initial QR code
+      function generateQRCode() {
+        var name = "genesis";
+        var age = "20";
+        var birthplace = "Laguna";
+
+        var qrCodeData =
+          "Name: " + name + "\nAge: " + age + "\nBirthplace: " + birthplace;
+        var encodedData = encodeURIComponent(qrCodeData);
+        var apiUrl =
+          "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
+          encodedData;
+
+        var qrCodeImage = document.createElement("img");
+        qrCodeImage.src = apiUrl;
+        qrCodeImage.alt = "QR Code";
+
+        var qrCodeDiv = document.getElementById("qrcode");
+        qrCodeDiv.innerHTML = "";
+        qrCodeDiv.appendChild(qrCodeImage);
+      }
+
+      generateQRCode();
+      window.addEventListener("resize", generateQRCode);
+    </script>
     <!-- script for bootstrap -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   </body>
