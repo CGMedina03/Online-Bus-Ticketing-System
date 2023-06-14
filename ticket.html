@@ -31,6 +31,8 @@
               <p class="card-text">Contact number: 09567352095</p>
               <p class="card-text">Number of Person(s): 2</p>
               <p class="card-text">Scheduled date: 3/23/2024</p>
+              <p class="card-text">Time: 10:00 - 12:00</p>
+              <p class="card-text">Route: Quirino</p>
             </div>
           </div>
         </div>
@@ -57,16 +59,15 @@
           html2canvas(qrCodeDiv).then(function (qrCodeCanvas) {
             const cardElement = document.querySelector(".card");
             html2canvas(cardElement).then(function (cardCanvas) {
+              const qrCodeLeft = qrCodeDiv.offsetLeft;
+              const qrCodeTop = qrCodeDiv.offsetTop;
+
               const finalCanvas = document.createElement("canvas");
               const context = finalCanvas.getContext("2d");
               finalCanvas.width = cardCanvas.width;
               finalCanvas.height = cardCanvas.height;
               context.drawImage(cardCanvas, 0, 0);
-              context.drawImage(
-                qrCodeCanvas,
-                qrCodeDiv.offsetLeft,
-                qrCodeDiv.offsetTop
-              );
+              context.drawImage(qrCodeCanvas, qrCodeLeft, qrCodeTop);
 
               const link = document.createElement("a");
               link.download = "ticket.png";
@@ -77,6 +78,9 @@
 
               button.style.display = "block";
               footer.style.display = "flex";
+
+              // Redirect to index.php
+              window.location.href = "index.html";
             });
           });
         }, 1000);
@@ -84,12 +88,26 @@
 
       // Generate the initial QR code
       function generateQRCode() {
-        var name = "genesis";
-        var age = "20";
-        var birthplace = "Laguna";
+        var name = "Christian Genesis A. Medina";
+        var contactNumber = "09567352095";
+        var numberOfPerson = "2";
+        var scheduleDate = "3/23/2024";
+        var time = "10:00 - 12:00";
+        var route = "Quirino";
 
         var qrCodeData =
-          "Name: " + name + "\nAge: " + age + "\nBirthplace: " + birthplace;
+          "Name: " +
+          name +
+          "\nContact number: " +
+          contactNumber +
+          "\nNumber of Person(s): " +
+          numberOfPerson +
+          "\nScheduled date: " +
+          scheduleDate +
+          "\nTime Schedule: " +
+          time +
+          "\nRoute: " +
+          route;
         var encodedData = encodeURIComponent(qrCodeData);
         var apiUrl =
           "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
