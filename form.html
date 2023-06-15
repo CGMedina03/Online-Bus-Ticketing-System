@@ -15,7 +15,7 @@
         position: relative;
         display: inline-block;
         width: 100%;
-        margin-left: 10px; /* Add margin-bottom */
+        margin-right: 10px; /* Add margin-bottom */
       }
       .custom-select-wrapper::after {
         content: "";
@@ -74,11 +74,11 @@
                 >Contact number:</label
               >
               <input
-                type="number"
+                type="tel"
                 class="form-control"
                 id="InputNUmber"
                 aria-describedby="contactNumber"
-                maxlength="11"
+                pattern="[0-9]{11}"
                 required
               />
             </div>
