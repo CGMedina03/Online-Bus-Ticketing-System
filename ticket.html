@@ -27,12 +27,8 @@
           <div class="col-md-6">
             <div class="card-body">
               <h5 class="card-title lead display-5">Thank you!</h5>
-              <p class="card-text">
-                Name: <strong> Christian Genesis A. Medina </strong>
-              </p>
-              <p class="card-text">
-                Contact number: <strong> 09567352095 </strong>
-              </p>
+              <p class="card-text">Name: <strong> test1 </strong></p>
+              <p class="card-text">Contact number: <strong> 12345 </strong></p>
               <p class="card-text">Number of Person(s): <strong>2</strong></p>
               <p class="card-text">
                 Scheduled date: <strong>3/23/2024</strong>
@@ -76,16 +72,14 @@
               context.drawImage(qrCodeCanvas, qrCodeLeft, qrCodeTop);
 
               const link = document.createElement("a");
-              link.download = "ticket.png";
-              link.href = finalCanvas
-                .toDataURL("image/png")
-                .replace("image/png", "image/octet-stream");
+              link.download = "ticket.jpeg";
+              link.href = finalCanvas.toDataURL("image/jpeg");
               link.click();
 
               button.style.display = "block";
               footer.style.display = "flex";
 
-              // Redirect to index.php
+              // Redirect to index.html
               window.location.href = "index.html";
             });
           });
@@ -94,8 +88,8 @@
 
       // Generate the initial QR code
       function generateQRCode() {
-        var name = "Christian Genesis A. Medina";
-        var contactNumber = "09567352095";
+        var name = "test1";
+        var contactNumber = "12345";
         var numberOfPerson = "2";
         var scheduleDate = "3/23/2024";
         var time = "10:00 - 12:00";
@@ -123,14 +117,17 @@
         qrCodeImage.src = apiUrl;
         qrCodeImage.alt = "QR Code";
 
-        var qrCodeDiv = document.getElementById("qrcode");
-        qrCodeDiv.innerHTML = "";
-        qrCodeDiv.appendChild(qrCodeImage);
+        qrCodeImage.onload = function () {
+          var qrCodeDiv = document.getElementById("qrcode");
+          qrCodeDiv.innerHTML = "";
+          qrCodeDiv.appendChild(qrCodeImage);
+        };
       }
 
       generateQRCode();
       window.addEventListener("resize", generateQRCode);
     </script>
+
     <!-- script for bootstrap -->
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   </body>
