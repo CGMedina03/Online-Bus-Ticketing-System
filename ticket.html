@@ -15,7 +15,28 @@
     <!-- start of the ticket -->
     <div class="container justify-content-center d-flex mt-5">
       <div class="card mb-3" style="max-width: 540px">
-        <div class="card-header text-capitalize text-center">Bus Corp.</div>
+        <div class="card-header justify-content-between d-flex">
+          <span class="card-title"> Bus Corp. </span>
+          <!-- for closing -->
+          <button
+            class="btn btn-sm justify-content-end"
+            onclick="navigateToIndex()"
+          >
+            <!-- icon for the closing button -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-x-lg"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"
+              />
+            </svg>
+          </button>
+        </div>
         <div class="row">
           <div class="col-md-6">
             <!-- for qr code generator -->
@@ -26,6 +47,7 @@
           </div>
           <div class="col-md-6">
             <div class="card-body">
+              <!-- displayig Data User Input -->
               <h5 class="card-title lead display-5">Thank you!</h5>
               <p class="card-text">Name: <strong> test1 </strong></p>
               <p class="card-text">Contact number: <strong> 12345 </strong></p>
@@ -38,54 +60,21 @@
             </div>
           </div>
         </div>
-        <div class="card-footer text-body-secondary d-flex justify-content-end">
-          <button class="btn btn-success btn-sm" onclick="downloadTicket()">
-            Download Ticket
-          </button>
+        <div
+          class="card-footer text-body-secondary d-flex justify-content-between"
+        >
+          <span class="text-muted"
+            ><strong
+              >Please take a screenshot of this before closing. Thank
+              you!</strong
+            ></span
+          >
         </div>
       </div>
     </div>
 
-    <!-- script to download the ticket -->
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- script to generate the QR code -->
     <script>
-      function downloadTicket() {
-        const button = document.querySelector(".card-footer button");
-        const footer = document.querySelector(".card-footer");
-        button.style.display = "none";
-        footer.style.display = "none";
-
-        const qrCodeDiv = document.getElementById("qrcode");
-
-        setTimeout(() => {
-          html2canvas(qrCodeDiv).then(function (qrCodeCanvas) {
-            const cardElement = document.querySelector(".card");
-            html2canvas(cardElement).then(function (cardCanvas) {
-              const qrCodeLeft = qrCodeDiv.offsetLeft;
-              const qrCodeTop = qrCodeDiv.offsetTop;
-
-              const finalCanvas = document.createElement("canvas");
-              const context = finalCanvas.getContext("2d");
-              finalCanvas.width = cardCanvas.width;
-              finalCanvas.height = cardCanvas.height;
-              context.drawImage(cardCanvas, 0, 0);
-              context.drawImage(qrCodeCanvas, qrCodeLeft, qrCodeTop);
-
-              const link = document.createElement("a");
-              link.download = "ticket.jpeg";
-              link.href = finalCanvas.toDataURL("image/jpeg");
-              link.click();
-
-              button.style.display = "block";
-              footer.style.display = "flex";
-
-              // Redirect to index.html
-              window.location.href = "index.html";
-            });
-          });
-        }, 1000);
-      }
-
       // Generate the initial QR code
       function generateQRCode() {
         var name = "test1";
@@ -95,6 +84,7 @@
         var time = "10:00 - 12:00";
         var route = "Quirino";
 
+        // Prepare the data for the QR code
         var qrCodeData =
           "Name: " +
           name +
@@ -108,15 +98,19 @@
           time +
           "\nRoute: " +
           route;
+
+        // Encode the data and generate the QR code URL
         var encodedData = encodeURIComponent(qrCodeData);
         var apiUrl =
           "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" +
           encodedData;
 
+        // Create an image element for the QR code
         var qrCodeImage = document.createElement("img");
         qrCodeImage.src = apiUrl;
         qrCodeImage.alt = "QR Code";
 
+        // Update the QR code display
         qrCodeImage.onload = function () {
           var qrCodeDiv = document.getElementById("qrcode");
           qrCodeDiv.innerHTML = "";
@@ -124,8 +118,13 @@
         };
       }
 
+      // Function to navigate back to index.html
+      function navigateToIndex() {
+        window.location.href = "index.html";
+      }
+
+      // Generate the QR code on page load
       generateQRCode();
-      window.addEventListener("resize", generateQRCode);
     </script>
 
     <!-- script for bootstrap -->
