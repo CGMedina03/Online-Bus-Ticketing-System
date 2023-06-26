@@ -2,51 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\information;
 use App\Models\userInfo;
+use Illuminate\Http\Request;
 
 class FormController extends Controller
 {
-    public function store(Request $request)
+    public function store()
     {
-        // Validate the form data
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'mobile' => ['required', 'regex:/^09\d{9}$/', 'size:11'],
-            'number_of_persons' => 'required|integer',
-            'month' => 'required',
-            'day' => 'required|integer',
-            'year' => 'required|integer',
-            'routes' => 'required',
-            'payment' => 'required',
-        ]);
+        $userInfo = new information();
 
-        // Create a new instance of the Information model
-        $information = new userInfo();
+        $userInfo->name = request('name');
+        $userInfo->email = request('email');
+        $userInfo->mobile = request('mobile');
+        $userInfo->number_of_persons = request('number_of_persons');
+        $userInfo->month = request('month');
+        $userInfo->day = request('day');
+        $userInfo->year = request('year');
+        $userInfo->routes = request('routes');
+        $userInfo->payment = request('payment');
 
-        // Assign the form data to the model attributes
-        $information->name = $validatedData['name'];
-        $information->email = $validatedData['email'];
-        $information->mobile = $validatedData['mobile'];
-        $information->number_of_persons = $validatedData['number_of_persons'];
-        $information->month = $validatedData['month'];
-        $information->day = $validatedData['day'];
-        $information->year = $validatedData['year'];
-        $information->routes = $validatedData['routes'];
-        $information->payment = $validatedData['payment'];
+        $userInfo->save();
 
-        // Save the model to the database
-        $information->save();
-
-        // Redirect the user to the TC.blade.php view
-        return view('TC');
-    }
-
-    public function messages()
-    {
-        return [
-            'mobile.regex' => 'The contact number must start with "09" and have 11 digits.',
-        ];
+        return redirect('/TC');
     }
 }

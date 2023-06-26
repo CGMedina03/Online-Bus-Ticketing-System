@@ -47,7 +47,7 @@
     <section class="mb-3 mt-3">
         <div class="container-fluid d-flex justify-content-center">
             <div class="m-1 col-7">
-                <form action="{{ route('submit.form') }}" method="POST">
+                <form action="/submit-form" method="POST">
                     @csrf
                     <h3 class="text-center mb-4">Contact Information</h3>
                     <!-- input for NAME -->
@@ -87,18 +87,18 @@
                                                 <option value="0" selected disabled hidden>
                                                     Month
                                                 </option>
-                                                <option value="1">January</option>
-                                                <option value="2">February</option>
-                                                <option value="3">March</option>
-                                                <option value="4">April</option>
-                                                <option value="5">May</option>
-                                                <option value="6">June</option>
-                                                <option value="7">July</option>
-                                                <option value="8">August</option>
-                                                <option value="9">September</option>
-                                                <option value="10">October</option>
-                                                <option value="11">November</option>
-                                                <option value="12">December</option>
+                                                <option value="January">January</option>
+                                                <option value="February">February</option>
+                                                <option value="March">March</option>
+                                                <option value="April">April</option>
+                                                <option value="May">May</option>
+                                                <option value="June">June</option>
+                                                <option value="July">July</option>
+                                                <option value="August">August</option>
+                                                <option value="September">September</option>
+                                                <option value="October">October</option>
+                                                <option value="November">November</option>
+                                                <option value="December">December</option>
                                             </select>
                                         </div>
                                         <!-- selection for DAY -->
@@ -196,7 +196,7 @@
                         <h3 class="text-center mb-4">Payment</h3>
                         <!-- radio for GCASH -->
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault1" checked />
+                            <input class="form-check-input" type="radio" value="Gcash" name="payment" id="flexRadioDefault1" checked />
                             <label class="form-check-label" for="flexRadioDefault1">
                                 Gcash
                             </label>
@@ -219,7 +219,7 @@
 
                     <div class="justify-content-around d-flex align-items-center">
                         <!-- cancel button -->
-                        <a href="index.html" type="submit" class="btn btn-secondary btn-sm">
+                        <a href="/" type="submit" class="btn btn-secondary btn-sm">
                             Cancel
                         </a>
                         <!-- submit button -->

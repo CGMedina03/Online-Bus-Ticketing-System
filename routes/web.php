@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\userInfo;
-
+use App\Http\Controllers\FormController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,17 +16,10 @@ use App\Models\userInfo;
 Route::get('/', function () {
     return view('index');
 });
-
 Route::get('/form', function () {
     return view('form');
 });
-
+Route::post('/submit-form', [App\Http\Controllers\FormController::class, 'store']);
 Route::get('/TC', function () {
     return view('TC');
 });
-
-Route::get('/ticket', function () {
-    return view('ticket');
-});
-
-Route::post('/submit-form', 'FormController@store')->name('submit.form');
