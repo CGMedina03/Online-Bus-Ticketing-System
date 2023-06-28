@@ -22,15 +22,15 @@
             <div class="col-md-6">
                 <div class="card-body">
                     <!-- displayig Data User Input -->
-                    <p class="card-text">Name: <strong>{{ $user->name }}</strong></p>
-                    <p class="card-text">Contact number: <strong>{{ $user->contact_number }}</strong></p>
-                    <p class="card-text">Number of Person(s): <strong>{{ $user->number_of_persons }}</strong></p>
+                    <p class="card-text">Name: <strong>{{ $userInfo->name }}</strong></p>
+                    <p class="card-text">Contact number: <strong>{{ $userInfo->mobile }}</strong></p>
+                    <p class="card-text">Number of Person(s): <strong>{{ $userInfo->number_of_persons }}</strong></p>
                     <p class="card-text">
-                        Scheduled date: <strong>{{ $user->scheduled_date }}</strong>
+                        Scheduled date: <strong>{{ $userInfo->month }} {{ $userInfo->day }}, {{ $userInfo->year }}</strong>
                     </p>
-                    <p class="card-text">Time: <strong>{{ $user->time }}</strong></p>
-                    <p class="card-text">Route: <strong>{{ $user->route }}</strong></p>
-                    <p class="card-text">Price: <strong>{{ $user->price }}</strong></p>
+                    <!-- <p class="card-text">Time: <strong>{{ $userInfo->time }}</strong></p> -->
+                    <p class="card-text">Route: <strong>{{ $userInfo->routes }}</strong></p>
+                    <p class="card-text">Price: <strong>{{ $userInfo->price }}</strong></p>
                 </div>
             </div>
             <div class="card-footer text-body-secondary d-flex justify-content-between">
@@ -44,12 +44,12 @@
     <script>
         // Generate the initial QR code
         function generateQRCode() {
-            var name = "{{ $user->name }}";
-            var contactNumber = "{{ $user->contact_number }}";
-            var numberOfPerson = "{{ $user->number_of_persons }}";
-            var scheduleDate = "{{ $user->scheduled_date }}";
-            var time = "{{ $user->time }}";
-            var route = "{{ $user->route }}";
+            var name = "{{ $userInfo->name }}";
+            var contactNumber = "{{ $userInfo->mobile }}";
+            var numberOfPerson = "{{ $userInfo->number_of_persons }}";
+            var scheduleDate = "{{ $userInfo->month }} {{ $userInfo->day }}, {{ $userInfo->year }}";
+            // var time = "{{ $userInfo->time }}";
+            var route = "{{ $userInfo->routes }}";
 
             // Prepare the data for the QR code
             var qrCodeData =
@@ -61,8 +61,8 @@
                 numberOfPerson +
                 "\nScheduled date: " +
                 scheduleDate +
-                "\nTime Schedule: " +
-                time +
+                // "\nTime Schedule: " +
+                // time +
                 "\nRoute: " +
                 route;
 

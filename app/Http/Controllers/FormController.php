@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\information;
-use App\Models\userInfo;
 use Illuminate\Http\Request;
+
 
 class FormController extends Controller
 {
@@ -23,6 +23,6 @@ class FormController extends Controller
         $userInfo->payment = request('payment');
 
         $userInfo->save();
-        return view('TC');
+        return view('ticket', ['userInfo' => $userInfo]);
     }
 }
