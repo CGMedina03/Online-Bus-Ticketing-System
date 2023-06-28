@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class FormController extends Controller
 {
-    public function store()
+    public function store(Request $request)
     {
         $userInfo = new information();
 
@@ -23,7 +23,6 @@ class FormController extends Controller
         $userInfo->payment = request('payment');
 
         $userInfo->save();
-
-        return redirect('/TC');
+        return view('TC');
     }
 }

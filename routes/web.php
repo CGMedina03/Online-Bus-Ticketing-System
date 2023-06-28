@@ -19,7 +19,8 @@ Route::get('/', function () {
 Route::get('/form', function () {
     return view('form');
 });
-Route::post('/submit-form', [App\Http\Controllers\FormController::class, 'store']);
-Route::get('/TC', function () {
-    return view('TC');
+Route::post('/form/TC', [App\Http\Controllers\FormController::class, 'store']);
+
+Route::get('/form/ticket', function () {
+    return view('ticket');
 });
