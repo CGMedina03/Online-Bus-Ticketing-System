@@ -1,26 +1,28 @@
 @extends('layouts.layout')
+@php
 
+@endphp
 <!-- contact information -->
 <section class="mb-3 mt-3">
     <div class="container-fluid d-flex justify-content-center">
-        <div class="m-1 col-7">
+        <div class="m-1 col-sm-10 col-md-7">
             <form action="/form/submit-form" method="POST">
                 @csrf
                 <h3 class="text-center mb-4">Contact Information</h3>
                 <!-- input for NAME -->
                 <div class="mb-3">
                     <label for="InputName" class="form-label">Name: </label>
-                    <input type="text" class="form-control" name="name" id="InputName" aria-describedby="userName" required />
+                    <input type="text" class="form-control" name="name" id="InputName" aria-describedby="userName" placeholder="e.g. Jose Rizal" required />
                 </div>
                 <!-- input for EMAIL -->
                 <div class="mb-3">
                     <label for="InputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" name="email" id="InputEmail1" aria-describedby="emailHelp" required />
+                    <input type="email" class="form-control" name="email" id="InputEmail1" aria-describedby="emailHelp" placeholder="e.g. jose@gmail.com" required />
                 </div>
                 <!-- input for CONTACT NUMBER -->
                 <div class="mb-3">
                     <label for="InputContact" class="form-label">Contact number:</label>
-                    <input type="tel" class="form-control" name="mobile" id="InputNUmber" aria-describedby="contactNumber" pattern="[0-9]{11}" required />
+                    <input type="tel" class="form-control" name="mobile" id="InputNUmber" aria-describedby="contactNumber" pattern="[0-9]{11}" placeholder="e.g. 09876543217" required />
                 </div>
                 <!-- input for the NUMBER OF PERSONS -->
                 <div class="mb-3">
@@ -191,7 +193,6 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-
                                     <!-- content for this page -->
                                     <p class="card-text text-body text-justify">
                                         These Terms and Conditions ("Agreement") govern the use of any
@@ -309,9 +310,9 @@
                         Cancel
                     </a>
                     <!-- submit button -->
-                    <button type="submit" class="btn btn-success btn-lg">
-                        Proceed
-                    </button>
+                    <button type="submit" class="btn btn-success btn-lg d-none d-lg-inline-block">Proceed</button>
+                    <button type="submit" class="btn btn-success d-inline-block d-lg-none">Proceed</button>
+
                 </div>
             </form>
         </div>

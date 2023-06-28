@@ -26,16 +26,14 @@
                     <p class="card-text">Contact number: <strong>{{ $userInfo->mobile }}</strong></p>
                     <p class="card-text">Number of Person(s): <strong>{{ $userInfo->number_of_persons }}</strong></p>
                     <p class="card-text">
-                        Scheduled date: <strong>{{ $userInfo->month }} {{ $userInfo->day }}, {{ $userInfo->year }}</strong>
+                        Scheduled date and time: <strong>{{ $userInfo->month }} {{ $userInfo->day }}, {{ $userInfo->year }} | {{ $userInfo->time }}</strong>
                     </p>
-                    <!-- <p class="card-text">Time: <strong>{{ $userInfo->time }}</strong></p> -->
                     <p class="card-text">Route: <strong>{{ $userInfo->routes }}</strong></p>
-                    <p class="card-text">Price: <strong>{{ $userInfo->price }}</strong></p>
+                    <p class="card-text">Total: <strong>{{ $userInfo->Total }}</strong></p>
                 </div>
             </div>
-            <div class="card-footer text-body-secondary d-flex justify-content-between">
-                <span class="text-muted"><strong>Please take a screenshot of this before closing. Thank
-                        you!</strong></span>
+            <div class="card-footer text-body-secondary">
+                <span class="text-muted"><strong>Please take a screenshot before closing. Thank you!</strong></span>
             </div>
         </div>
     </div>
@@ -48,8 +46,10 @@
             var contactNumber = "{{ $userInfo->mobile }}";
             var numberOfPerson = "{{ $userInfo->number_of_persons }}";
             var scheduleDate = "{{ $userInfo->month }} {{ $userInfo->day }}, {{ $userInfo->year }}";
-            // var time = "{{ $userInfo->time }}";
+            var time = "{{ $userInfo->time }}";
             var route = "{{ $userInfo->routes }}";
+            var total = "{{ $userInfo->Total }}";
+
 
             // Prepare the data for the QR code
             var qrCodeData =
@@ -59,12 +59,12 @@
                 contactNumber +
                 "\nNumber of Person(s): " +
                 numberOfPerson +
-                "\nScheduled date: " +
-                scheduleDate +
-                // "\nTime Schedule: " +
-                // time +
+                "\nScheduled date and time: " +
+                scheduleDate + " | " + time +
                 "\nRoute: " +
-                route;
+                route +
+                "\nTotal: " +
+                total;
 
             // Encode the data and generate the QR code URL
             var encodedData = encodeURIComponent(qrCodeData);

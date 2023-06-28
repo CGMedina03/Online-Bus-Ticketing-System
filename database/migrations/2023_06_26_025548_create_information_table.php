@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('day');
             $table->integer('year');
             $table->string('routes');
+            $table->integer('prices');
+            $table->string('total');
             $table->string('payment');
             $table->timestamps();
         });
