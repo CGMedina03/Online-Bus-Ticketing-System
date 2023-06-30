@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class information extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'mobile',
+        'month',
+        'day',
+        'year',
+        'route',
+        'number_of_persons',
+        'payment',
+        'time',
+        'price',
+        'Total',
+    ];
 }

@@ -21,9 +21,3 @@ Route::get('/form', function () {
     return view('form');
 });
 Route::post('/form/submit-form', [App\Http\Controllers\FormController::class, 'store']);
-Route::get('form/terms-and-conditions', function () {
-    return view('TC');
-});
-Route::get('/form/ticket', function () {
-    return view('ticket');
-});
