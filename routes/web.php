@@ -20,4 +20,4 @@ Route::get('/', function () {
 Route::get('/form', function () {
     return view('form');
 });
-Route::post('/form/submit-form', [App\Http\Controllers\FormController::class, 'store']);
+Route::post('/form', [App\Http\Controllers\FormController::class, 'store']);

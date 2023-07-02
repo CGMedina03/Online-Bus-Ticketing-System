@@ -65,7 +65,6 @@ class FormController extends Controller
         $userInfo->routes = request('routes');
         $userInfo->payment = request('payment');
 
-        // test
         // Perform FCFS algorithm to check ticket availability
         $month = $userInfo->month;
         $day = $userInfo->day;
@@ -100,7 +99,7 @@ class FormController extends Controller
             // Add any necessary success messages or redirects
             return view('ticket', ['userInfo' => $userInfo]);
         } else {
-            // Insufficient seats available, display error message with available seats
+            // All seats unavailable, display error message
             if ($availableSeats <= 0) {
                 $errorMessage = 'Sorry, all available seats for the requested date and route have been taken.';
             }
@@ -110,8 +109,5 @@ class FormController extends Controller
             }
             return redirect('/form')->with('error', $errorMessage);
         }
-
-        // test end
-
     }
 }

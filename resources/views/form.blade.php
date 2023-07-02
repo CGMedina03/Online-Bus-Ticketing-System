@@ -1,12 +1,10 @@
 @extends('layouts.layout')
-@php
 
-@endphp
 <!-- contact information -->
 <section class="mb-3 mt-3">
     <div class="container-fluid d-flex justify-content-center">
         <div class="m-1 col-sm-10 col-md-7">
-            <form action="/form/submit-form" method="POST">
+            <form action="/form" method="POST">
                 @csrf
                 <h3 class="text-center mb-4">Contact Information</h3>
                 <!-- Add this code wherever you want to display the error message -->
@@ -132,7 +130,6 @@
                                             <option value="31">31</option>
                                         </select>
                                     </div>
-
                                 </div>
                             </div>
                             <!-- For destination routes -->
@@ -157,47 +154,28 @@
                         </div>
                     </div>
                 </section>
-
                 <!-- Payment -->
                 <section class="mb-5 mt-3 mx-3">
                     <h3 class="text-center mb-4">Payment</h3>
                     <!-- radio for GCASH -->
                     <div class="form-check">
-                        <input class="form-check-input" data-bs-toggle="modal" data-bs-target="#exampleModal" type="radio" value="Gcash" name="payment" id="flexRadioDefault1" required />
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Gcash
+                        <input class="form-check-input" type="radio" value="Gcash" name="payment" id="paymaya" required />
+                        <label class="form-check-label" for="paymaya">
+                            Paymaya
                         </label>
+
                     </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Payment</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <!-- Your modal content here -->
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos ducimus minus rerum provident sit nostrum perspiciatis voluptatibus cum et nesciunt ratione accusamus qui sequi, quidem autem excepturi commodi cumque earum aliquam deserunt perferendis doloremque a! Libero magni temporibus molestiae voluptatem voluptate sequi nam eum? Nulla quo saepe quasi debitis qui.</p>
-                                    <button id="taskButton" type="button" data-bs-dismiss="modal" class="btn btn-primary">Do Task</button>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- disabled radio for CREDIT -->
+                    <!--  radio for CREDIT -->
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault2" disabled />
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" name="payment" id="creditCard" required />
+                        <label class="form-check-label" for="creditCard">
                             Credit
                         </label>
                     </div>
-                    <!-- disabled radio for DEBIT -->
+                    <!--  radio for DEBIT -->
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault2" disabled />
-                        <label class="form-check-label" for="flexRadioDefault2">
+                        <input class="form-check-input" type="radio" name="payment" id="debitCard" required />
+                        <label class="form-check-label" for="debitCard">
                             Debit
                         </label>
                     </div>
@@ -415,31 +393,7 @@
     // Call the function initially to disable or remove the options based on the current date
     disablePastDates();
 
-    // Flag to track if the task was completed
-    let taskCompleted = false;
+    // test
 
-    // Add an event listener to the taskButton inside the modal
-    document.getElementById('taskButton').addEventListener('click', function() {
-        // Perform your task here
-
-        // Assuming the task is successful
-        taskCompleted = true;
-
-        // Select the radio button only if the task was completed
-        if (taskCompleted) {
-            document.getElementById('flexRadioDefault1').checked = true;
-            document.getElementById('flexRadioDefault1').removeAttribute('data-bs-toggle');
-        }
-    });
-
-    // Add an event listener to the modal when it is hidden
-    document.getElementById('exampleModal').addEventListener('hidden.bs.modal', function() {
-        // Deselect the radio button when the modal is closed without completing the task
-        if (!taskCompleted) {
-            document.getElementById('flexRadioDefault1').checked = false;
-        }
-
-        // Reset the taskCompleted flag for the next time
-        taskCompleted = false;
-    });
+    // end test
 </script>
