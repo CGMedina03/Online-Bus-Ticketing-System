@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FormController;
-use App\Models\information;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,4 +20,5 @@ Route::get('/', function () {
 Route::get('/form', function () {
     return view('form');
 });
-Route::post('/form', [App\Http\Controllers\FormController::class, 'store']);
+Route::post('/form/{payment}', [App\Http\Controllers\FormController::class, 'store']);
+Route::get('/ticket', [App\Http\Controllers\FormController::class, 'show'])->name('ticket');

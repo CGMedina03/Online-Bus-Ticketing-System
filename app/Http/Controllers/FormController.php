@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\information;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
 
 class FormController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request, $payment)
     {
         // Define the associative array with destination routes, time, and price
         $routeData = [
@@ -54,7 +55,6 @@ class FormController extends Controller
             ],
         ];
         $userInfo = new information();
-
         $userInfo->name = request('name');
         $userInfo->email = request('email');
         $userInfo->mobile = request('mobile');
@@ -64,6 +64,19 @@ class FormController extends Controller
         $userInfo->year = request('year');
         $userInfo->routes = request('routes');
         $userInfo->payment = request('payment');
+        // validate and handle the errors
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required|regex:/09[0-9]{9}/',
+            'number_of_persons' => 'required|numeric|max:30',
+            'year' => 'required',
+            'month' => 'required',
+            'day' => 'required',
+            'routes' => 'required',
+            'payment' => 'required', // Validate payment field (radio button)
+            'flexCheckChecked' => 'required', // Validate checkbox field
+        ]);
 
         // Perform FCFS algorithm to check ticket availability
         $month = $userInfo->month;
@@ -96,8 +109,14 @@ class FormController extends Controller
             }
             // Sufficient seats available, save the ticket details to the database
             $userInfo->save();
-            // Add any necessary success messages or redirects
-            return view('ticket', ['userInfo' => $userInfo]);
+            // test
+            // Redirect to the appropriate page based on the selected payment
+            if ($payment === 'paymaya') {
+                return view('paymaya');
+            } else {
+                return view('credit_debit');
+            }
+            // end test
         } else {
             // All seats unavailable, display error message
             if ($availableSeats <= 0) {
@@ -109,5 +128,13 @@ class FormController extends Controller
             }
             return redirect('/form')->with('error', $errorMessage);
         }
+    }
+    public function show()
+    {
+        // Retrieve the latest form data from the database
+        $userInfo = information::latest()->first(); // Replace `FormData` with your actual model name
+
+        // Pass the form data to the view
+        return view('ticket', ['userInfo' => $userInfo]);
     }
 }
