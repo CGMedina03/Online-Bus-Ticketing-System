@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\information;
-use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 
 class FormController extends Controller
@@ -64,19 +65,26 @@ class FormController extends Controller
         $userInfo->year = request('year');
         $userInfo->routes = request('routes');
         $userInfo->payment = request('payment');
-        // validate and handle the errors
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'mobile' => 'required|regex:/09[0-9]{9}/',
-            'number_of_persons' => 'required|numeric|max:30',
-            'year' => 'required',
-            'month' => 'required',
-            'day' => 'required',
-            'routes' => 'required',
-            'payment' => 'required', // Validate payment field (radio button)
-            'flexCheckChecked' => 'required', // Validate checkbox field
-        ]);
+     // Validate the form data
+     $validator = Validator::make($request->all(), [
+        'name' => 'required',
+        'email' => 'required|email',
+        'mobile' => 'required|regex:/09[0-9]{9}/',
+        'number_of_persons' => 'required|numeric|max:30',
+        'year' => 'required',
+        'month' => 'required',
+        'day' => 'required',
+        'routes' => 'required',
+        'payment' => 'required', // Validate payment field (radio button)
+    ]);
+
+    // If the form validation fails, redirect back with errors and old input
+    if ($validator->fails()) {
+        return redirect()
+            ->back()
+            ->withErrors($validator)
+            ->withInput($request->except('password', 'password_confirmation'));
+    }
 
         // Perform FCFS algorithm to check ticket availability
         $month = $userInfo->month;
@@ -116,7 +124,6 @@ class FormController extends Controller
             } else {
                 return view('credit_debit');
             }
-            // end test
         } else {
             // All seats unavailable, display error message
             if ($availableSeats <= 0) {
