@@ -49,7 +49,7 @@
                 <!-- input for the NUMBER OF PERSONS -->
                 <div class="mb-3">
                     <label for="InputPersons" class="form-label">Number of person(s):</label>
-                    <input type="number" class="form-control{{ $errors->has('number_of_persons') ? ' is-invalid' : '' }}" name="number_of_persons" id="InputPersons" aria-describedby="numberOfPersons" max="30" placeholder="e.g. 5" value="{{ old('number_of_persons') }}" />
+                    <input type="number" class="form-control{{ $errors->has('number_of_persons') ? ' is-invalid' : '' }}" name="number_of_persons" id="InputPersons" aria-describedby="numberOfPersons" max="30" placeholder="e.g. 5" value="{{ old('number_of_persons') }}" oninput="calculate()"/>
                     @if ($errors->has('number_of_persons'))
                     <div class="invalid-feedback">
                         {{ $errors->first('number_of_persons') }}
@@ -76,7 +76,6 @@
                                     @for ($year = $currentYear; $year <= $endYear; $year++)
                                         <option value="{{ $year }}" {{ old('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
                                     @endfor
-
                                         </select>
                                         @error('year')
                                         <div class="invalid-feedback">
@@ -123,27 +122,29 @@
                             <!-- For destination routes -->
                             <div class="col-md-6">
                                 <span>Route picker</span>
-                                <select class="form-select{{ $errors->has('routes') ? ' is-invalid' : '' }}" aria-label="Default select example" name="routes">
+                                <select class="form-select{{ $errors->has('routes') ? ' is-invalid' : '' }}" aria-label="Default select example" name="routes"  onchange="calculate()" id="selectRoutes">
                                 <option value="0" selected disabled hidden>
                                          Select a route
                                 </option>
                                 @foreach(['Pampanga', 'Pangasinan', 'Nueva Vizcaya', 'Quirino', 'Cagayan', 'Ilocos Sur', 'Kalinga', 'Ilocos Norte', 'Camarines Sur', 'Sorsogon'] as $route)
                                     <option value="{{ $route }}" {{ old('routes') == $route ? 'selected' : '' }}>{{ $route }}</option>
                                 @endforeach
-                                </select>
+                                </select> <!-- show the total -->
+                            <div id="result"></div>
                                 @if ($errors->has('routes'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('routes') }}
                                 </div>
                                 @endif
                             </div>
+
                         </div>
                     </div>
                 </section>
                 <!-- Payment -->
                 <section class="mb-5 mt-3 mx-3">
                     <h3 class="text-center mb-4">Payment</h3>
-                  <!-- radio for PAYMAYA -->
+<!-- radio for PAYMAYA -->
 <div class="form-check">
     <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Paymaya" name="payment" id="paymaya" {{ old('payment') == 'Paymaya' ? 'checked' : '' }} />
     <label class="form-check-label" for="paymaya">
@@ -158,9 +159,9 @@
 
 <!-- radio for CREDIT -->
 <div class="form-check">
-    <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" name="payment" value="Credit" id="creditCard" {{ old('payment') == 'Credit' ? 'checked' : '' }} />
+    <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Credit" name="payment" id="creditCard" {{ old('payment') == 'Credit' ? 'checked' : '' }} />
     <label class="form-check-label" for="creditCard">
-        Credit
+        Credit/Debit
     </label>
     @error('payment')
     <div class="invalid-feedback">
@@ -169,18 +170,6 @@
     @enderror
 </div>
 
-<!-- radio for DEBIT -->
-<div class="form-check">
-    <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" name="payment" value="Debit" id="debitCard" {{ old('payment') == 'Debit' ? 'checked' : '' }} />
-    <label class="form-check-label" for="debitCard">
-        Debit
-    </label>
-    @error('payment')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
-</div>
 
                     <!-- checkbox for ACCEPTING TERMS AND CONDITION -->
                     <div class="form-check my-3">
@@ -211,6 +200,33 @@
         </div>
     </div>
 </section>
+<!-- Add the following script at the bottom of your view file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    function calculate() {
+        // Get the user input and selected value
+        const userInput = parseInt(document.getElementById("InputPersons").value);
+        const selectValue = document.getElementById("selectRoutes").value;
+
+        // Fetch the price data from the server
+        $.ajax({
+            url: "/get-price",
+            method: "GET",
+            data: {route: selectValue},
+            success: function(response) {
+                const price = parseFloat(response.price.replace('₱', '').replace(',', ''));
+                const result = userInput * price;
+                document.getElementById("result").textContent = "Total price: ₱" + result.toFixed(2);
+            },
+            error: function() {
+                console.log("Error occurred while fetching price data.");
+            }
+        });
+    }
+
+    // Call the calculate function initially to show the result if there's any initial value
+    calculate();
+</script>
 <!-- script to validate the selected options -->
 <script src="{{ asset('js/validateDate.js') }}"></script>
 <script src="{{ asset('js/gatewayRoute.js') }}"></script>

@@ -10,10 +10,9 @@ use Illuminate\Support\Facades\Session;
 
 class FormController extends Controller
 {
-    public function store(Request $request, $payment)
+    private function getRouteData()
     {
-        // Define the associative array with destination routes, time, and price
-        $routeData = [
+        return [
             'Pampanga' => [
                 'time' => '4:00 - 6:00',
                 'price' => '₱250.00',
@@ -53,8 +52,14 @@ class FormController extends Controller
             'Sorsogon' => [
                 'time' => '22:00 - 0:00',
                 'price' => '₱425.00',
-            ],
+            ]
         ];
+    }
+
+    public function store(Request $request, $payment)
+    {
+        // Define the associative array with destination routes, time, and price
+        $routeData = $this->getRouteData();
         $userInfo = new information();
         $userInfo->name = request('name');
         $userInfo->email = request('email');
@@ -65,26 +70,26 @@ class FormController extends Controller
         $userInfo->year = request('year');
         $userInfo->routes = request('routes');
         $userInfo->payment = request('payment');
-     // Validate the form data
-     $validator = Validator::make($request->all(), [
-        'name' => 'required',
-        'email' => 'required|email',
-        'mobile' => 'required|regex:/09[0-9]{9}/',
-        'number_of_persons' => 'required|numeric|max:30',
-        'year' => 'required',
-        'month' => 'required',
-        'day' => 'required',
-        'routes' => 'required',
-        'payment' => 'required', // Validate payment field (radio button)
-    ]);
+        // Validate the form data
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'mobile' => 'required|regex:/09[0-9]{9}/',
+            'number_of_persons' => 'required|numeric|max:30',
+            'year' => 'required',
+            'month' => 'required',
+            'day' => 'required',
+            'routes' => 'required',
+            'payment' => 'required', // Validate payment field (radio button)
+        ]);
 
-    // If the form validation fails, redirect back with errors and old input
-    if ($validator->fails()) {
-        return redirect()
-            ->back()
-            ->withErrors($validator)
-            ->withInput($request->except('password', 'password_confirmation'));
-    }
+        // If the form validation fails, redirect back with errors and old input
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput($request->except('password', 'password_confirmation'));
+        }
 
         // Perform FCFS algorithm to check ticket availability
         $month = $userInfo->month;
@@ -115,9 +120,9 @@ class FormController extends Controller
 
                 $userInfo->Total = $formattedTotal;
             }
-            // Sufficient seats available, save the ticket details to the database
+
             $userInfo->save();
-            // test
+
             // Redirect to the appropriate page based on the selected payment
             if ($payment === 'paymaya') {
                 return view('paymaya');
@@ -132,9 +137,14 @@ class FormController extends Controller
             // Insufficient seats available, display error message based on availability
             else {
                 $errorMessage = 'Sorry, there are only ' . $availableSeats . ' seats available for the requested date and route.';
+                return redirect('/form')
+                    ->with('error', $errorMessage)
+                    ->withInput();
+
             }
             return redirect('/form')->with('error', $errorMessage);
         }
+
     }
     public function show()
     {
@@ -143,5 +153,18 @@ class FormController extends Controller
 
         // Pass the form data to the view
         return view('ticket', ['userInfo' => $userInfo]);
+    }
+    public function getPrice(Request $request)
+    {
+        $routeData = $this->getRouteData();
+
+        $selectedRoute = $request->input('route');
+        $selectedPrice = $routeData[$selectedRoute]['price'] ?? null;
+
+        if ($selectedPrice) {
+            return response()->json(['price' => $selectedPrice]);
+        } else {
+            return response()->json(['error' => 'Price not found for the selected route.']);
+        }
     }
 }
