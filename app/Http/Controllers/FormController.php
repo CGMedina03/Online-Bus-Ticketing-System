@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\information;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-
 
 class FormController extends Controller
 {
@@ -118,14 +116,16 @@ class FormController extends Controller
 
                 $userInfo->Total = $formattedTotal;
             }
+
             // Sufficient seats available, save the ticket details to the database
             $userInfo->save();
             // test
             // Redirect to the appropriate page based on the selected payment
+            $mobileNumber = $request->input('mobile');
             if ($payment === 'paymaya') {
-                return view('paymaya');
+                return view('paymaya.paymaya', ['mobileNumber' => $mobileNumber]);
             } else {
-                return view('credit_debit');
+                return view('creditDebit.paymentForm');
             }
         } else {
             // All seats unavailable, display error message

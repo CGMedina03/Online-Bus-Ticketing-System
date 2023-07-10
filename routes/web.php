@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FormController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +22,7 @@ Route::get('/form', function () {
 });
 Route::get('/get-price', [App\Http\Controllers\FormController::class, 'getPrice'])->name('get.price');
 Route::post('/form/{payment}', [App\Http\Controllers\FormController::class, 'store']);
-Route::get('/ticket', [App\Http\Controllers\FormController::class, 'show'])->name('ticket');
+Route::post('/ticket', [App\Http\Controllers\FormController::class, 'show'])->name('ticket');
+Route::post('/oneTimePin', function () {
+    return view('paymaya.oneTimePin');
+});

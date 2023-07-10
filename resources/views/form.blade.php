@@ -137,10 +137,10 @@
                         </div>
                     </div>
                 </section>
-
                                 <!-- Payment -->
                     <section class="mb-5 mt-3 mx-3">
                         <h3 class="text-center mb-4">Payment</h3>
+                        <h5> <div id="result"></div></h5>
                                           <!-- radio for PAYMAYA -->
                         <div class="form-check">
                             <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Paymaya" name="payment" id="paymaya" {{ old('payment') == 'Paymaya' ? 'checked' : '' }} />
@@ -177,7 +177,6 @@
                             </div>
                             @enderror
                         </div>
-                        <div id="result"></div>
                     </section>
 
                     <!-- checkbox for ACCEPTING TERMS AND CONDITION -->
