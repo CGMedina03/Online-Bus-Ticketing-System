@@ -21,5 +21,5 @@ Route::get('/form', function () {
     return view('form');
 });
 Route::get('/get-price', [App\Http\Controllers\FormController::class, 'getPrice'])->name('get.price');
-Route::post('/form/{payment}', [App\Http\Controllers\FormController::class, 'store']);
+Route::post('/form', [App\Http\Controllers\FormController::class, 'store']);
 Route::get('/ticket', [App\Http\Controllers\FormController::class, 'show'])->name('ticket');

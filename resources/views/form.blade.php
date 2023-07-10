@@ -23,7 +23,6 @@
                     </div>
                     @endif
                 </div>
-
                 <!-- input for EMAIL -->
                 <div class="mb-3">
                     <label for="InputEmail1" class="form-label">Email address</label>
@@ -34,7 +33,6 @@
                     </div>
                     @endif
                 </div>
-
                 <!-- input for CONTACT NUMBER -->
                 <div class="mb-3">
                     <label for="InputContact" class="form-label">Contact number:</label>
@@ -45,7 +43,6 @@
                     </div>
                     @endif
                 </div>
-
                 <!-- input for the NUMBER OF PERSONS -->
                 <div class="mb-3">
                     <label for="InputPersons" class="form-label">Number of person(s):</label>
@@ -137,39 +134,38 @@
                                 </div>
                                 @endif
                             </div>
-
                         </div>
                     </div>
                 </section>
-                <!-- Payment -->
-                <section class="mb-5 mt-3 mx-3">
-                    <h3 class="text-center mb-4">Payment</h3>
-<!-- radio for PAYMAYA -->
-<div class="form-check">
-    <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Paymaya" name="payment" id="paymaya" {{ old('payment') == 'Paymaya' ? 'checked' : '' }} />
-    <label class="form-check-label" for="paymaya">
-        Paymaya
-    </label>
-    @error('payment')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
-</div>
 
-<!-- radio for CREDIT -->
-<div class="form-check">
-    <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Credit" name="payment" id="creditCard" {{ old('payment') == 'Credit' ? 'checked' : '' }} />
-    <label class="form-check-label" for="creditCard">
-        Credit/Debit
-    </label>
-    @error('payment')
-    <div class="invalid-feedback">
-        {{ $message }}
-    </div>
-    @enderror
-</div>
-
+                                <!-- Payment -->
+                    <section class="mb-5 mt-3 mx-3">
+                        <h3 class="text-center mb-4">Payment</h3>
+                        <!-- radio for PAYMAYA -->
+                        <div class="form-check">
+                            <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Paymaya" name="payment" id="paymaya" {{ old('payment') == 'Paymaya' ? 'checked' : '' }} />
+                            <label class="form-check-label" for="paymaya">
+                                Paymaya
+                            </label>
+                            @error('payment')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <!-- radio for CREDIT -->
+                        <div class="form-check">
+                            <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Credit" name="payment" id="creditCard" {{ old('payment') == 'Credit' ? 'checked' : '' }} />
+                            <label class="form-check-label" for="creditCard">
+                                Credit/Debit
+                            </label>
+                            @error('payment')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                    </section>
 
                     <!-- checkbox for ACCEPTING TERMS AND CONDITION -->
                     <div class="form-check my-3">
@@ -184,7 +180,6 @@
                         </div>
                         @enderror
                     </div>
-                </section>
 
                 <div class="justify-content-around d-flex align-items-center">
                     <!-- cancel button -->
@@ -194,14 +189,12 @@
                     <!-- submit button -->
                     <button type="submit" class="btn btn-success btn-lg d-none d-lg-inline-block">Proceed</button>
                     <button type="submit" class="btn btn-success d-inline-block d-lg-none">Proceed</button>
-
                 </div>
             </form>
         </div>
     </div>
 </section>
-<!-- Add the following script at the bottom of your view file -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script>
     function calculate() {
         // Get the user input and selected value
@@ -228,5 +221,3 @@
     calculate();
 </script>
 <!-- script to validate the selected options -->
-<script src="{{ asset('js/validateDate.js') }}"></script>
-<script src="{{ asset('js/gatewayRoute.js') }}"></script>
