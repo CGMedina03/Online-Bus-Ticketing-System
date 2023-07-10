@@ -55,10 +55,8 @@ class FormController extends Controller
             ]
         ];
     }
-
     public function store(Request $request, $payment)
     {
-        // Define the associative array with destination routes, time, and price
         $routeData = $this->getRouteData();
         $userInfo = new information();
         $userInfo->name = request('name');
@@ -120,9 +118,9 @@ class FormController extends Controller
 
                 $userInfo->Total = $formattedTotal;
             }
-
+            // Sufficient seats available, save the ticket details to the database
             $userInfo->save();
-
+            // test
             // Redirect to the appropriate page based on the selected payment
             if ($payment === 'paymaya') {
                 return view('paymaya');
@@ -137,14 +135,9 @@ class FormController extends Controller
             // Insufficient seats available, display error message based on availability
             else {
                 $errorMessage = 'Sorry, there are only ' . $availableSeats . ' seats available for the requested date and route.';
-                return redirect('/form')
-                    ->with('error', $errorMessage)
-                    ->withInput();
-
             }
             return redirect('/form')->with('error', $errorMessage);
         }
-
     }
     public function show()
     {

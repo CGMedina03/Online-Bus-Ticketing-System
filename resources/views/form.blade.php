@@ -73,6 +73,7 @@
                                     @for ($year = $currentYear; $year <= $endYear; $year++)
                                         <option value="{{ $year }}" {{ old('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
                                     @endfor
+
                                         </select>
                                         @error('year')
                                         <div class="invalid-feedback">
@@ -119,15 +120,14 @@
                             <!-- For destination routes -->
                             <div class="col-md-6">
                                 <span>Route picker</span>
-                                <select class="form-select{{ $errors->has('routes') ? ' is-invalid' : '' }}" aria-label="Default select example" name="routes"  onchange="calculate()" id="selectRoutes">
+                                <select class="form-select{{ $errors->has('routes') ? ' is-invalid' : '' }}" aria-label="Default select example" name="routes" onchange="calculate()" id="selectRoutes">
                                 <option value="0" selected disabled hidden>
                                          Select a route
                                 </option>
                                 @foreach(['Pampanga', 'Pangasinan', 'Nueva Vizcaya', 'Quirino', 'Cagayan', 'Ilocos Sur', 'Kalinga', 'Ilocos Norte', 'Camarines Sur', 'Sorsogon'] as $route)
                                     <option value="{{ $route }}" {{ old('routes') == $route ? 'selected' : '' }}>{{ $route }}</option>
                                 @endforeach
-                                </select> <!-- show the total -->
-                            <div id="result"></div>
+                                </select>
                                 @if ($errors->has('routes'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('routes') }}
@@ -141,7 +141,7 @@
                                 <!-- Payment -->
                     <section class="mb-5 mt-3 mx-3">
                         <h3 class="text-center mb-4">Payment</h3>
-                        <!-- radio for PAYMAYA -->
+                                          <!-- radio for PAYMAYA -->
                         <div class="form-check">
                             <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Paymaya" name="payment" id="paymaya" {{ old('payment') == 'Paymaya' ? 'checked' : '' }} />
                             <label class="form-check-label" for="paymaya">
@@ -155,9 +155,9 @@
                         </div>
                         <!-- radio for CREDIT -->
                         <div class="form-check">
-                            <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" value="Credit" name="payment" id="creditCard" {{ old('payment') == 'Credit' ? 'checked' : '' }} />
+                            <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" name="payment" value="Credit" id="creditCard" {{ old('payment') == 'Credit' ? 'checked' : '' }} />
                             <label class="form-check-label" for="creditCard">
-                                Credit/Debit
+                                Credit
                             </label>
                             @error('payment')
                             <div class="invalid-feedback">
@@ -165,6 +165,19 @@
                             </div>
                             @enderror
                         </div>
+                        <!-- radio for DEBIT -->
+                        <div class="form-check">
+                            <input class="form-check-input{{ $errors->has('payment') ? ' is-invalid' : '' }}" type="radio" name="payment" value="Debit" id="debitCard" {{ old('payment') == 'Debit' ? 'checked' : '' }} />
+                            <label class="form-check-label" for="debitCard">
+                                Debit
+                            </label>
+                            @error('payment')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div id="result"></div>
                     </section>
 
                     <!-- checkbox for ACCEPTING TERMS AND CONDITION -->
@@ -221,3 +234,5 @@
     calculate();
 </script>
 <!-- script to validate the selected options -->
+<script src="{{ asset('js/validateDate.js') }}"></script>
+<script src="{{ asset('js/gatewayRoute.js') }}"></script>
