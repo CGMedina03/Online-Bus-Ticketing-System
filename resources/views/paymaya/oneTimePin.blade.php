@@ -199,25 +199,5 @@
       src="https://iam-assets-staging.paymaya.com/maya-connect-ui/2.0.18/scripts/main.js"
       charset="UTF-8"
     ></script>
-
-    <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var otpFields = document.getElementsByClassName('otp-field');
-
-    Array.from(otpFields).forEach(function(field, index) {
-      field.addEventListener('input', function() {
-        if (field.value !== String(index + 1)) {
-          field.setCustomValidity('Invalid value');
-        } else {
-          field.setCustomValidity('');
-        }
-      });
-    });
-  });
-  function redirectToTicketPage() {
-        // Redirect the user to the ticket page
-        window.location.href = "{{ route('ticket') }}";
-    }
-</script>
   </body>
 </html>

@@ -1,4 +1,3 @@
-@extends('layouts.layout')
 <!DOCTYPE html>
 <html class="no-js" lang="en" id="theme-paymaya">
   <head>
@@ -89,8 +88,6 @@
                       type="text"
                       name="identityValue"
                       value="09193890579"
-      pattern="09193890579"
-      title="Invalid Mobile Number"
                       placeholder="&nbsp;"
                       required=""
                       aria-labelledby="identity-placeholder"
@@ -124,9 +121,6 @@
                     aria-labelledby="password-placeholder"
                     id="password"
                     name="password"
-                    pattern="Password@1"
-      title="Invalid Password"
-
                     autocomplete="new-password"
                     required=""
                     placeholder="&nbsp;"
@@ -167,7 +161,5 @@
       src="https://iam-assets-staging.paymaya.com/maya-connect-ui/2.0.18/scripts/main.js"
       charset="UTF-8"
     ></script>
-
-
   </body>
 </html>

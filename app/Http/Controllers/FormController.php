@@ -56,16 +56,7 @@ class FormController extends Controller
     public function store(Request $request, $payment)
     {
         $routeData = $this->getRouteData();
-        $userInfo = new information();
-        $userInfo->name = request('name');
-        $userInfo->email = request('email');
-        $userInfo->mobile = request('mobile');
-        $userInfo->number_of_persons = request('number_of_persons');
-        $userInfo->month = request('month');
-        $userInfo->day = request('day');
-        $userInfo->year = request('year');
-        $userInfo->routes = request('routes');
-        $userInfo->payment = request('payment');
+
         // Validate the form data
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -88,11 +79,11 @@ class FormController extends Controller
         }
 
         // Perform FCFS algorithm to check ticket availability
-        $month = $userInfo->month;
-        $day = $userInfo->day;
-        $year = $userInfo->year;
-        $routes = $userInfo->routes;
-        $numberOfPersons = $userInfo->number_of_persons;
+        $month = $request->input('month');
+        $day = $request->input('day');
+        $year = $request->input('year');
+        $routes = $request->input('routes');
+        $numberOfPersons = $request->input('number_of_persons');
 
         $availableSeats = 30 - information::where('month', $month)
             ->where('day', $day)
@@ -102,47 +93,85 @@ class FormController extends Controller
 
         if ($availableSeats >= $numberOfPersons) {
             // Retrieve the selected route details from the $routeData associative array
-            $routeDetails = $routeData[$userInfo->routes] ?? null;
+            $routeDetails = $routeData[$routes] ?? null;
             if ($routeDetails) {
+                $userInfo = new information();
+                $userInfo->name = $request->input('name');
+                $userInfo->email = $request->input('email');
+                $userInfo->mobile = $request->input('mobile');
+                $userInfo->number_of_persons = $numberOfPersons;
+                $userInfo->month = $month;
+                $userInfo->day = $day;
+                $userInfo->year = $year;
+                $userInfo->routes = $routes;
+                $userInfo->payment = $request->input('payment');
                 $userInfo->time = $routeDetails['time'];
                 $userInfo->prices = $routeDetails['price'];
 
                 // Multiply the price by the number of persons
                 $price = floatval(str_replace(['₱', ','], '', $routeDetails['price']));
-                $totalPrice = $price * $userInfo->number_of_persons;
+                $totalPrice = $price * $numberOfPersons;
 
                 // Format the total price with the currency symbol and decimal point
                 $formattedTotal = '₱' . number_format($totalPrice, 2);
 
                 $userInfo->Total = $formattedTotal;
-            }
 
-            // Sufficient seats available, save the ticket details to the database
-            $userInfo->save();
-            // test
-            // Redirect to the appropriate page based on the selected payment
-            $mobileNumber = $request->input('mobile');
-            if ($payment === 'paymaya') {
-                return view('paymaya.paymaya', ['mobileNumber' => $mobileNumber]);
-            } else {
-                return view('creditDebit.paymentForm');
+                // Store the form data in a session
+                $request->session()->put('userInfo', $userInfo);
+
+                // Redirect to the appropriate page based on the selected payment
+                if ($payment === 'paymaya') {
+                    return view('paymaya.paymaya');
+                } else {
+                    return view('creditDebit.paymentForm');
+                }
             }
-        } else {
-            // All seats unavailable, display error message
-            if ($availableSeats <= 0) {
-                $errorMessage = 'Sorry, all available seats for the requested date and route have been taken.';
-            }
-            // Insufficient seats available, display error message based on availability
-            else {
-                $errorMessage = 'Sorry, there are only ' . $availableSeats . ' seats available for the requested date and route.';
-            }
-            return redirect('/form')->with('error', $errorMessage);
         }
+
+        // All seats unavailable or insufficient seats available, display error message
+        $errorMessage = ($availableSeats <= 0)
+            ? 'Sorry, all available seats for the requested date and route have been taken.'
+            : 'Sorry, there are only ' . $availableSeats . ' seats available for the requested date and route.';
+
+        return redirect('/form')
+            ->with('error', $errorMessage)
+            ->withInput($request->except('password', 'password_confirmation'));
     }
+
     public function show()
     {
-        // Retrieve the latest form data from the database
-        $userInfo = information::latest()->first(); // Replace `FormData` with your actual model name
+        // Retrieve the form data from the session
+        $formData = session('userInfo');
+
+        // Create a new information instance
+        $userInfo = new Information();
+        $userInfo->name = $formData['name'];
+        $userInfo->email = $formData['email'];
+        $userInfo->mobile = $formData['mobile'];
+        $userInfo->number_of_persons = $formData['number_of_persons'];
+        $userInfo->month = $formData['month'];
+        $userInfo->day = $formData['day'];
+        $userInfo->year = $formData['year'];
+        $userInfo->routes = $formData['routes'];
+        $userInfo->payment = $formData['payment'];
+        $routeDetails = $this->getRouteData()[$userInfo->routes] ?? null;
+        if ($routeDetails) {
+            $userInfo->time = $routeDetails['time'];
+            $userInfo->prices = $routeDetails['price'];
+
+            $price = floatval(str_replace(['₱', ','], '', $routeDetails['price']));
+            $totalPrice = $price * $userInfo->number_of_persons;
+            $formattedTotal = '₱' . number_format($totalPrice, 2);
+
+            $userInfo->Total = $formattedTotal;
+        }
+
+        // Save the ticket details to the database
+        $userInfo->save();
+
+        // Clear the form data from the session
+        session()->forget('userInfo');
 
         // Pass the form data to the view
         return view('ticket', ['userInfo' => $userInfo]);
