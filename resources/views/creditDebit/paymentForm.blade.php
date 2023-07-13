@@ -1,199 +1,310 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!-- link for css bootstrap -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-            crossorigin="anonymous"
-        />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <title>Card Payment</title>
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                background-color: #f9f9f9;
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: flex;
-                -ms-flex-line-pack: center;
-                align-content: center;
-                -webkit-box-align: center;
-                -ms-flex-align: center;
-                align-items: center;
-                -webkit-box-pack: center;
-                -ms-flex-pack: center;
-                justify-content: center;
-                min-height: 100vh;
-                -ms-flex-wrap: wrap;
-                flex-wrap: wrap;
-                font-family: "Raleway";
-            }
+@extends('layouts.layout')
+@section('index')
+<style>
+    body {
+        overflow-x: hidden;
+    }
 
-            .payment-title {
-                width: 100%;
-                text-align: center;
-            }
+    .row {
+        display: -ms-flexbox; /* IE10 */
+        display: flex;
+        -ms-flex-wrap: wrap; /* IE10 */
+        flex-wrap: wrap;
+        margin: 30px 0;
+    }
 
-            .form-container .field-container:first-of-type {
-                grid-area: name;
-            }
+    .col-75 {
+        -ms-flex: 75%; /* IE10 */
+        flex: 75%;
+        padding: 0 16px;
+    }
 
-            .form-container .field-container:nth-of-type(2) {
-                grid-area: number;
-            }
+    .container {
+        background-color: #f2f2f2;
+        padding: 5px 20px 15px 20px;
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+    }
 
-            .form-container .field-container:nth-of-type(3) {
-                grid-area: expiration;
-            }
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        margin-bottom: 0px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
 
-            .form-container .field-container:nth-of-type(4) {
-                grid-area: security;
-            }
+    label {
+        margin-bottom: 10px;
+        display: block;
+    }
 
-            .field-container input {
-                -webkit-box-sizing: border-box;
-                box-sizing: border-box;
-            }
+    .icon-container {
+        margin-bottom: 20px;
+        padding: 7px 0;
+        font-size: 24px;
+    }
 
-            .field-container {
-                position: relative;
-            }
+    .btn {
+        background-color: #04aa6d;
+        color: white;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 17px;
+    }
 
-            .form-container {
-                display: grid;
-                grid-column-gap: 10px;
-                grid-template-columns: auto auto;
-                grid-template-rows: 90px 90px 90px;
-                grid-template-areas: "name name" "number number" "expiration security";
-                max-width: 400px;
-                padding: 20px;
-                color: #707070;
-            }
+    .btn:hover {
+        background-color: #45a049;
+    }
 
-            label {
-                padding-bottom: 5px;
-                font-size: 13px;
-            }
+    .error-message {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+    }
 
-            input {
-                margin-top: 3px;
-                padding: 15px;
-                font-size: 16px;
-                width: 100%;
-                border-radius: 3px;
-                border: 1px solid #dcdcdc;
-            }
+    /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (and change the direction - make the "cart" column go on top) */
+    @media (max-width: 800px) {
+        .row {
+            flex-direction: column-reverse;
+        }
 
-            .error-message {
-                color: red;
-                font-size: 12px;
-                margin-top: 5px;
-            }
-
-            .error-input {
-                border: 1px solid red;
-            }
-
-            .ccicon {
-                height: 38px;
-                position: absolute;
-                right: 6px;
-                top: calc(50% - 17px);
-                width: 60px;
-            }
-
-            .container {
-                width: 100%;
-                max-width: 400px;
-                max-height: 251px;
-                height: 54vw;
-                padding: 20px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="payment-title">
-            <h1>Payment Information</h1>
-        </div>
-        <div class="container preload">
-            <div class="creditcard">
-                <div class="form-container">
-                    <form
-                        action="{{ route('ticket') }}"
-                        method="POST"
-                        onsubmit="return validateForm()"
-                    >
-                        @csrf
-                        <!-- Include CSRF token for form protection -->
-                        <div class="field-container">
-                            <label for="name">Name</label>
-                            <input
-                                id="name"
-                                name="name"
-                                maxlength="20"
-                                type="text"
-                            />
+        .col-25 {
+            margin-bottom: 20px;
+        }
+    }
+    #general-error{
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+<div class="row">
+    <div class="col-75">
+        <div class="container">
+            <form action="/ticket" method="post" onsubmit="return validateForm()">
+                @csrf
+                <div class="row">
+                    <div class="col-50">
+                        <h3>Payment</h3>
+                        <div class="col-50">
+                                <label>Card Type</label>
+                                <h4 id="cardtype-display"></h4>
+                            </div>
+                        <label for="cname">Card name</label>
+                        <input type="text" id="cname" name="cardname" placeholder="John More Doe" required />
+                        <div id="cname-error" class="error-message"></div>
+                        <label for="ccnum">Card number</label>
+                        <input type="text" id="ccnum" name="cardnumber" placeholder="1111222233334444" required />
+                        <div id="ccnum-error" class="error-message"></div>
+                        <label for="expmonth">Exp Month</label>
+                        <input type="text" id="expmonth" name="expmonth" placeholder="1" required />
+                        <div id="expmonth-error" class="error-message"></div>
+                        <div class="row">
+                            <div class="col-50">
+                                <label for="expyear">Exp Year</label>
+                                <input type="text" id="expyear" name="expyear" placeholder="2018" required />
+                                <div id="expyear-error" class="error-message"></div>
+                            </div>
+                            <div class="col-50">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="352" required />
+                                <div id="cvv-error" class="error-message"></div>
+                            </div>
+                            <div class="col-50">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" placeholder="secbarry1" />
+                                <div id="password-error" class="error-message"></div>
+                                <span>For the password not enabled, type NA</span>
+                            </div>
+                            <h2  id="general-error" class="error-message"></h2>
                         </div>
-                        <div class="field-container">
-                            <label for="cardnumber">Card Number</label>
-                            <input
-                                id="cardnumber"
-                                name="cardnumber"
-                                type="text"
-                                pattern="[0-9]*"
-                                inputmode="numeric"
-                            />
-                            <svg
-                                id="ccicon"
-                                class="ccicon"
-                                width="750"
-                                height="471"
-                                viewBox="0 0 750 471"
-                                version="1.1"
-                                xmlns="http://www.w3.org/2000/svg"
-                                xmlns:xlink="http://www.w3.org/1999/xlink"
-                            ></svg>
-                        </div>
-                        <div class="field-container">
-                            <label for="expirationdate"
-                                >Expiration (mm/yy)</label
-                            >
-                            <input
-                                id="expirationdate"
-                                name="expirationdate"
-                                type="text"
-                                pattern="[0-9]*"
-                                inputmode="numeric"
-                            />
-                        </div>
-                        <div class="field-container">
-                            <label for="securitycode">Security Code</label>
-                            <input
-                                id="securitycode"
-                                name="securitycode"
-                                type="text"
-                                pattern="[0-9]*"
-                                inputmode="numeric"
-                            />
-                        </div>
-                        <button type="submit" class="btn btn-success btn-lg">
-                            Confirm
-                        </button>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <button type="submit" class="btn">Continue to checkout</button>
+            </form>
         </div>
-        <!-- script for bootstrap -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-            crossorigin="anonymous"
-        ></script>
-    </body>
-</html>
+    </div>
+</div>
+<script>
+    const validCardNumbers = [
+        {
+            cardType: "MASTERCARD",
+            number: "5123456789012346",
+            expiryMonth: "12",
+            expiryYear: "2025",
+            csc: "111",
+            securePassword: "Not enabled",
+        },
+        {
+            cardType: "MASTERCARD",
+            number: "5453010000064154",
+            expiryMonth: "12",
+            expiryYear: "2025",
+            csc: "111",
+            securePassword: "secbarry1",
+        },
+        {
+            cardType: "VISA",
+            number: "4123450131001381",
+            expiryMonth: "12",
+            expiryYear: "2025",
+            csc: "123",
+            securePassword: "mctest1",
+        },
+        {
+            cardType: "VISA",
+            number: "4123450131001522",
+            expiryMonth: "12",
+            expiryYear: "2025",
+            csc: "123",
+            securePassword: "mctest1",
+        },
+        {
+            cardType: "VISA",
+            number: "4123450131004443",
+            expiryMonth: "12",
+            expiryYear: "2025",
+            csc: "123",
+            securePassword: "mctest1",
+        },
+        {
+            cardType: "VISA",
+            number: "4123450131000508",
+            expiryMonth: "12",
+            expiryYear: "2025",
+            csc: "111",
+            securePassword: "Not enabled",
+        },
+    ];
+
+    function validateForm() {
+        var cardNameInput = document.getElementById("cname");
+        var cardNumberInput = document.getElementById("ccnum");
+        var cardTypeDisplay = document.getElementById("cardtype-display");
+        var expirationMonthInput = document.getElementById("expmonth");
+        var expirationYearInput = document.getElementById("expyear");
+        var cvvInput = document.getElementById("cvv");
+        var passwordInput = document.getElementById("password");
+
+        var cardName = cardNameInput.value;
+        var cardNumber = cardNumberInput.value;
+        var expirationMonth = expirationMonthInput.value;
+        var expirationYear = expirationYearInput.value;
+        var cvv = cvvInput.value;
+        var password = passwordInput.value;
+
+        // Clear error messages
+        clearError();
+
+        // Validate card name (Title case)
+        if (!/^[A-Z][a-z]+(?: [A-Z][a-z]+)*$/.test(cardName)) {
+            showError(cardNameInput, "Name should be in Title case.");
+            return false;
+        }
+
+        // Validate card number (only numbers)
+        if (!/^\d+$/.test(cardNumber)) {
+            showError(cardNumberInput, "Card number should contain only numbers.");
+            return false;
+        }
+
+        // Validate expiration month (numbers between 1 and 12)
+        if (!/^(0?[1-9]|1[0-2])$/.test(expirationMonth)) {
+            showError(expirationMonthInput, "Invalid month.");
+            return false;
+        }
+
+        // Validate expiration year (2 or 4 digits)
+        if (!/^\d{2}(\d{2})?$/.test(expirationYear)) {
+            showError(expirationYearInput, "Invalid year.");
+            return false;
+        }
+
+        // Validate CVV (3 digits)
+        if (!/^\d{3}$/.test(cvv)) {
+            showError(cvvInput, "Invalid CVV.");
+            return false;
+        }
+
+        // Check if password is required and validate password
+        var validCard = validCardNumbers.find(function (card) {
+            return (
+                card.number === cardNumber &&
+                card.expiryMonth === expirationMonth &&
+                card.expiryYear === expirationYear &&
+                card.csc === cvv
+            );
+        });
+
+        if (!validCard) {
+            showError(null, "Invalid card account.");
+            return false;
+        }
+
+        if (validCard.securePassword !== "Not enabled") {
+            // Password is enabled, validate the password
+            if (password !== validCard.securePassword) {
+                showError(passwordInput, "Invalid password.");
+                return false;
+            }
+        } else {
+            // Password is not enabled, allow "NA" or empty input
+            if (password !== "" && password.toLowerCase() !== "na") {
+                showError(passwordInput, "Password is not required.");
+                return false;
+            }
+        }
+
+        // Update the card type display
+        cardTypeDisplay.textContent = validCard.cardType;
+
+        return true;
+    }
+
+    function showError(element, message) {
+        if (element) {
+            var errorElementId = element.id + "-error";
+            var errorElement = document.getElementById(errorElementId);
+            errorElement.textContent = message;
+        } else {
+            var generalErrorElement = document.getElementById("general-error");
+            generalErrorElement.textContent = message;
+        }
+    }
+
+    function clearError() {
+        var errorElements = document.getElementsByClassName("error-message");
+        for (var i = 0; i < errorElements.length; i++) {
+            errorElements[i].textContent = "";
+        }
+        var generalErrorElement = document.getElementById("general-error");
+        generalErrorElement.textContent = "";
+    }
+
+    function updateCardTypeDisplay() {
+        var cardNumberInput = document.getElementById("ccnum");
+        var cardTypeDisplay = document.getElementById("cardtype-display");
+        var cardNumber = cardNumberInput.value;
+
+        var matchedCard = validCardNumbers.find(function (card) {
+            return card.number === cardNumber;
+        });
+
+        if (matchedCard) {
+            cardTypeDisplay.textContent = matchedCard.cardType;
+        } else {
+            cardTypeDisplay.textContent = "";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var cardNumberInput = document.getElementById("ccnum");
+        cardNumberInput.addEventListener("input", updateCardTypeDisplay);
+    });
+</script>
+@endsection
