@@ -82,6 +82,9 @@
         font-size: 20px;
         font-weight: bold;
     }
+    .input-group .input-group-text {
+        height: 100%;
+    }
 </style>
 <div class="row">
     <div class="col-75">
@@ -116,10 +119,17 @@
                                 <div id="cvv-error" class="error-message"></div>
                             </div>
                             <div class="col-50">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password" placeholder="secbarry1" />
+                             <label for="password">Password</label>
+                                <div class="input-group ">
+                                    <input type="password" id="password" name="password" class="form-control" />
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" onclick="togglePasswordVisibility()">
+                                            <i id="toggle-icon" class="fas fa-eye-slash "></i>
+                                        </span>
+                                    </div>
+                                </div>
                                 <div id="password-error" class="error-message"></div>
-                                <span>For the password not enabled, type NA</span>
+                                <span class="text-muted">For the password not enabled, type NA</span>
                             </div>
                             <h2  id="general-error" class="error-message"></h2>
                         </div>
@@ -306,5 +316,20 @@
         var cardNumberInput = document.getElementById("ccnum");
         cardNumberInput.addEventListener("input", updateCardTypeDisplay);
     });
+
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        var toggleIcon = document.getElementById("toggle-icon");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
+        } else {
+            passwordInput.type = "password";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        }
+    }
 </script>
 @endsection
