@@ -192,6 +192,15 @@
                         </div>
                         @enderror
                     </div>
+                <!-- Modal -->
+                <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <!-- Include the modal content partial file -->
+                            @include('TC')
+                        </div>
+                    </div>
+                </div>
 
                 <div class="justify-content-around d-flex align-items-center">
                     <!-- cancel button -->

@@ -82,7 +82,7 @@
 
 <!-- Contact us -->
 <section class="contactInfo">
-    <nav class="navbar bg-body-tertiary justify-content-center mb-3">
+    <nav class="navbar bg-body-tertiary justify-content-center">
         <h3 class="text-success">Contact us for more Information</h3>
 
         <div class="container">
@@ -116,6 +116,5 @@
 </section>
 <!-- script for real-time date and time -->
 <script src="{{ asset('js/realTimeDate.js') }}">
-
 </script>
 @endsection

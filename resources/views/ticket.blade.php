@@ -39,5 +39,5 @@
     </div>
 
     <!-- script to generate the QR code -->
-    <script src="{{ asset('js/qrCodeGenerator.js') }}">
+    <script src="{{ asset('js/qrCodeGenerator.js') }}"   data-user-info="{{ $userInfo->toJson() }}">
     </script>

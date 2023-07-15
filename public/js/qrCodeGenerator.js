@@ -1,13 +1,17 @@
+// Retrieve the userInfo data from the data attribute
+var userInfoData = document.currentScript.getAttribute("data-user-info");
+var userInfo = JSON.parse(userInfoData);
+
 // Generate the initial QR code
 function generateQRCode() {
-    var name = "{{ $userInfo->name }}";
-    var contactNumber = "{{ $userInfo->mobile }}";
-    var numberOfPerson = "{{ $userInfo->number_of_persons }}";
+    var name = userInfo.name;
+    var contactNumber = userInfo.mobile;
+    var numberOfPerson = userInfo.number_of_persons;
     var scheduleDate =
-        "{{ $userInfo->month }} {{ $userInfo->day }}, {{ $userInfo->year }}";
-    var time = "{{ $userInfo->time }}";
-    var route = "{{ $userInfo->routes }}";
-    var total = "{{ $userInfo->Total }}";
+        userInfo.month + " " + userInfo.day + ", " + userInfo.year;
+    var time = userInfo.time;
+    var route = userInfo.routes;
+    var total = userInfo.Total;
 
     // Prepare the data for the QR code
     var qrCodeData =
