@@ -59,7 +59,7 @@ class FormController extends Controller
 
         // Validate the form data
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|regex:/^[A-Za-z.\s]+$/',
             'email' => 'required|email',
             'mobile' => 'required|regex:/09[0-9]{9}/',
             'number_of_persons' => 'required|numeric|max:30',
@@ -67,7 +67,7 @@ class FormController extends Controller
             'month' => 'required',
             'day' => 'required',
             'routes' => 'required',
-            'payment' => 'required', // Validate payment field (radio button)
+            'payment' => 'required',
         ]);
 
         // If the form validation fails, redirect back with errors and old input

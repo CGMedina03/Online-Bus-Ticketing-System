@@ -4,7 +4,8 @@
 <!-- Table for datas -->
 <h1 class="text-center text-muted mx-3 mt-3">Bus Corp. Online Ticketing</h1>
 <h3 class="text-center text-success" id="currentDateTime"></h3>
-<div class="container text-center">
+<div class="text-center">*Please keep in mind that you will be unable to arrange an appointment on the same day as it is shown on the calendar above.</div>
+<div class="container text-center mt-3">
     <div class="row">
         <div class="col">
             <table class="table table-success table-striped text-uppercase">

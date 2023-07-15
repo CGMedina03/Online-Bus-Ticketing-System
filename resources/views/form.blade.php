@@ -36,7 +36,7 @@
                 <!-- input for CONTACT NUMBER -->
                 <div class="mb-3">
                     <label for="InputContact" class="form-label">Contact number:</label>
-                    <input type="tel" class="form-control{{ $errors->has('mobile') ? ' is-invalid' : '' }}" name="mobile" id="InputNUmber" aria-describedby="contactNumber" pattern="09[0-9]{9}" placeholder="e.g. 09876543217" value="{{ old('mobile') }}" />
+                    <input type="number" class="form-control{{ $errors->has('mobile') ? ' is-invalid' : '' }}" name="mobile" id="InputNUmber" aria-describedby="contactNumber" pattern="09[0-9]{9}" placeholder="e.g. 09876543217" value="{{ old('mobile') }}" />
                     @if ($errors->has('mobile'))
                     <div class="invalid-feedback">
                         {{ $errors->first('mobile') }}
@@ -52,6 +52,7 @@
                         {{ $errors->first('number_of_persons') }}
                     </div>
                     @endif
+                    <small class="text-danger">*Max of 30 persons per bus only</small>
                 </div>
                 <!-- Appointment -->
                 <section class="mb-5 mt-3">
