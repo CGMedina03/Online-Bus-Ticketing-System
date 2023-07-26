@@ -65,7 +65,7 @@ class FormController extends Controller
             'number_of_persons' => 'required|numeric|max:30',
             'year' => 'required',
             'month' => 'required',
-            'day' => 'required',
+            'day' => 'required|integer|between:1,31',
             'routes' => 'required',
             'payment' => 'required',
         ]);

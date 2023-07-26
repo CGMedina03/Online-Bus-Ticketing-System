@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-6">
                 <!-- for qr code generator -->
-                <div id="qrcode" class="d-flex justify-content-center align-items-center m-md-5 mt-3"></div>
+                <div id="qrcode" class="d-flex justify-content-center align-items-center mt-3"></div>
             </div>
             <div class="col-md-6">
                 <div class="card-body">
